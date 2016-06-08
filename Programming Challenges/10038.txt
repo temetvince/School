@@ -1,0 +1,84 @@
+---------- Forwarded message ----------
+From: UVa Online Judge <noreply@onlinejudge.org>
+Date: Mon, Sep 14, 2015 at 1:51 PM
+Subject: Submission 16101453 - Accepted
+To: Emmett Casey <elcasey@email.uark.edu>
+
+
+Hi,
+
+This is an automated response from UVa Online Judge.
+
+Your submission with number 16101453 for the problem 10038 - Jolly Jumpers has succeeded with verdict Accepted.
+
+Congratulations! Now it is time to try a new problem.
+
+Best regards,
+
+The UVa Online Judge team
+
+
+
+
+
+
+
+
+
+#include <iostream>
+#include <string>
+#include <algorithm>
+#include <vector>
+#include <cmath>
+
+int main()
+{
+	while (true)
+	{
+		std::string input;
+		std::vector<int> in;
+		getline(std::cin, input);
+		if (input.empty() || !std::cin)
+			break;
+
+		int position = 0;
+		for (size_t i = 0; i < input.length(); i++)
+			if (input[i] == ' ' || i == input.length() - 1)
+			{
+				in.push_back(atoi(input.substr(position, i).c_str()));
+				position = i + 1;
+			}
+
+		int numberOfCases = in.at(0);
+		in.erase(in.begin());
+
+		bool possibleInts[numberOfCases];
+		std::fill_n(possibleInts, numberOfCases, false);
+
+		for (size_t i = 0; i < in.size() - 1; i++)
+		{
+			int val = abs(in.at(i) - in.at(i+1));
+			possibleInts[val] = true;
+		}
+
+		for (int i = 0; i < numberOfCases; i++)
+		{
+			if (i == 0)
+			{
+				if (numberOfCases == 1)
+					std::cout << "Jolly" << std::endl;
+			}
+			else if (possibleInts[i] == false)
+			{
+				std::cout << "Not jolly" << std::endl;
+				break;
+			}
+			else if (possibleInts[i] == true && i == numberOfCases - 1)
+				std::cout << "Jolly" << std::endl;
+		}
+
+		std::vector<int>().swap(in);
+	}
+
+	return 0;
+}

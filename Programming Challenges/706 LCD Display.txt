@@ -1,0 +1,300 @@
+---------- Forwarded message ----------
+From: UVa Online Judge <noreply@onlinejudge.org>
+Date: Sun, Aug 30, 2015 at 3:27 PM
+Subject: Submission 16020486 - Accepted
+To: Emmett Casey <elcasey@email.uark.edu>
+
+
+Hi,
+
+This is an automated response from UVa Online Judge.
+
+Your submission with number 16020486 for the problem 706 - LCD Display has succeeded with verdict Accepted.
+
+Congratulations! Now it is time to try a new problem.
+
+Best regards,
+
+The UVa Online Judge team
+
+
+
+import java.io.IOException;
+import java.util.StringTokenizer;
+
+class Main
+{
+	private static int sizeOfNumbers = 0;
+	private static String numbersToDisplay = "";
+
+	public static void main(String[] args)
+	{
+		String in;
+		StringTokenizer inString;
+		while ((in = ReadLn(255)) != null)
+		{
+			inString = new StringTokenizer(in);
+			while(inString.hasMoreTokens())
+			{
+				String firstToken = inString.nextToken();
+
+				sizeOfNumbers = Integer.valueOf(firstToken);
+				numbersToDisplay = inString.nextToken();
+
+				if(sizeOfNumbers == 0 && numbersToDisplay.charAt(0) == '0')
+					return;
+
+				printNumbers();
+				System.out.println();
+			}
+		}
+	}
+
+	private static void printNumbers()
+	{
+		for(int i = 0; i < sizeOfNumbers * 2 + 3; i++)
+		{
+			String segment = getSegment(i);
+			for(int j = 0; j < numbersToDisplay.length(); j++)
+			{
+				switch(numbersToDisplay.charAt(j))
+				{
+					case '0': print0(segment); break;
+					case '1': print1(segment); break;
+					case '2': print2(segment); break;
+					case '3': print3(segment); break;
+					case '4': print4(segment); break;
+					case '5': print5(segment); break;
+					case '6': print6(segment); break;
+					case '7': print7(segment); break;
+					case '8': print8(segment); break;
+					case '9': print9(segment); break;
+					default: break;
+				}
+				if(j != numbersToDisplay.length() - 1)
+					System.out.print(" ");
+			}
+			System.out.println();
+		}
+	}
+
+	private static String getSegment(int i)
+	{
+		if(i == 0)
+			return "top";
+		else if(i < sizeOfNumbers + 1)
+			return "topToMiddle";
+		else if(i == sizeOfNumbers + 1)
+			return "middle";
+		else if (i < sizeOfNumbers * 2 + 2)
+			return "middleToBottom";
+		else
+			return "bottom";
+	}
+
+	private static void print0(String segment)
+	{
+		if(segment.equals("top"))
+			printHorizontalLine();
+		else if(segment.equals("topToMiddle"))
+			printVerticalLeftAndRight();
+		else if(segment.equals("middle"))
+			printHorizontalEmptyLine();
+		else if(segment.equals("middleToBottom"))
+			printVerticalLeftAndRight();
+		else
+			printHorizontalLine();
+	}
+
+	private static void print1(String segment)
+	{
+		if(segment.equals("top"))
+			printHorizontalEmptyLine();
+		else if(segment.equals("topToMiddle"))
+			printVerticalRight();
+		else if(segment.equals("middle"))
+			printHorizontalEmptyLine();
+		else if(segment.equals("middleToBottom"))
+			printVerticalRight();
+		else
+			printHorizontalEmptyLine();
+	}
+
+	private static void print2(String segment)
+	{
+		if(segment.equals("top"))
+			printHorizontalLine();
+		else if(segment.equals("topToMiddle"))
+			printVerticalRight();
+		else if(segment.equals("middle"))
+			printHorizontalLine();
+		else if(segment.equals("middleToBottom"))
+			printVerticalLeft();
+		else
+			printHorizontalLine();
+	}
+
+	private static void print3(String segment)
+	{
+		if(segment.equals("top"))
+			printHorizontalLine();
+		else if(segment.equals("topToMiddle"))
+			printVerticalRight();
+		else if(segment.equals("middle"))
+			printHorizontalLine();
+		else if(segment.equals("middleToBottom"))
+			printVerticalRight();
+		else
+			printHorizontalLine();
+	}
+
+	private static void print4(String segment)
+	{
+		if(segment.equals("top"))
+			printHorizontalEmptyLine();
+		else if(segment.equals("topToMiddle"))
+			printVerticalLeftAndRight();
+		else if(segment.equals("middle"))
+			printHorizontalLine();
+		else if(segment.equals("middleToBottom"))
+			printVerticalRight();
+		else
+			printHorizontalEmptyLine();
+	}
+
+	private static void print5(String segment)
+	{
+		if(segment.equals("top"))
+			printHorizontalLine();
+		else if(segment.equals("topToMiddle"))
+			printVerticalLeft();
+		else if(segment.equals("middle"))
+			printHorizontalLine();
+		else if(segment.equals("middleToBottom"))
+			printVerticalRight();
+		else
+			printHorizontalLine();
+	}
+
+	private static void print6(String segment)
+	{
+		if(segment.equals("top"))
+			printHorizontalLine();
+		else if(segment.equals("topToMiddle"))
+			printVerticalLeft();
+		else if(segment.equals("middle"))
+			printHorizontalLine();
+		else if(segment.equals("middleToBottom"))
+			printVerticalLeftAndRight();
+		else
+			printHorizontalLine();
+	}
+
+	private static void print7(String segment)
+	{
+		if(segment.equals("top"))
+			printHorizontalLine();
+		else if(segment.equals("topToMiddle"))
+			printVerticalRight();
+		else if(segment.equals("middle"))
+			printHorizontalEmptyLine();
+		else if(segment.equals("middleToBottom"))
+			printVerticalRight();
+		else
+			printHorizontalEmptyLine();
+	}
+
+	private static void print8(String segment)
+	{
+		if(segment.equals("top"))
+			printHorizontalLine();
+		else if(segment.equals("topToMiddle"))
+			printVerticalLeftAndRight();
+		else if(segment.equals("middle"))
+			printHorizontalLine();
+		else if(segment.equals("middleToBottom"))
+			printVerticalLeftAndRight();
+		else
+			printHorizontalLine();
+	}
+
+	private static void print9(String segment)
+	{
+		if(segment.equals("top"))
+			printHorizontalLine();
+		else if(segment.equals("topToMiddle"))
+			printVerticalLeftAndRight();
+		else if(segment.equals("middle"))
+			printHorizontalLine();
+		else if(segment.equals("middleToBottom"))
+			printVerticalRight();
+		else
+			printHorizontalLine();
+	}
+
+	private static void printHorizontalLine()
+	{
+		System.out.print(" ");
+		for(int i = 0; i < sizeOfNumbers; i++)
+			System.out.print("-");
+		System.out.print(" ");
+	}
+
+	private static void printVerticalLeft()
+	{
+		System.out.print("|");
+		printHorizontalEmptyLineMinus2();
+		System.out.print(" ");
+	}
+
+	private static void printVerticalRight()
+	{
+		System.out.print(" ");
+		printHorizontalEmptyLineMinus2();
+		System.out.print("|");
+	}
+
+	private static void printVerticalLeftAndRight()
+	{
+		System.out.print("|");
+		printHorizontalEmptyLineMinus2();
+		System.out.print("|");
+	}
+
+	private static void printHorizontalEmptyLine()
+	{
+		for (int i = 0; i < sizeOfNumbers + 2; i++)
+			System.out.print(" ");
+	}
+
+	private static void printHorizontalEmptyLineMinus2()
+	{
+		for (int i = 0; i < sizeOfNumbers; i++)
+			System.out.print(" ");
+	}
+
+	//Provided by uva.onlinejudge.org
+	private static String ReadLn (int maxLg)
+    {
+        byte lin[] = new byte [maxLg];
+        int lg = 0, car = -1;
+        String line = "";
+
+        try
+        {
+            while (lg < maxLg)
+            {
+                car = System.in.read();
+                if ((car < 0) || (car == '\n')) break;
+                lin [lg++] += car;
+            }
+        }
+        catch (IOException e)
+        {
+            return (null);
+        }
+
+        if ((car < 0) && (lg == 0)) return (null);  // eof
+        return (new String (lin, 0, lg));
+    }
+}

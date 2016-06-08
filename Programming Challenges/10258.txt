@@ -1,0 +1,182 @@
+From: UVa Online Judge <noreply@onlinejudge.org>
+Date: Mon, Sep 14, 2015 at 11:49 PM
+Subject: Submission 16103479 - Accepted
+To: Emmett Casey <elcasey@email.uark.edu>
+
+
+Hi,
+
+This is an automated response from UVa Online Judge.
+
+Your submission with number 16103479 for the problem 10258 - Contest Scoreboard has succeeded with verdict Accepted.
+
+Congratulations! Now it is time to try a new problem.
+
+Best regards,
+
+The UVa Online Judge team
+
+
+
+
+
+
+#include <iostream>
+#include <string>
+#include <algorithm>
+#include <vector>
+#include <cmath>
+
+class contestant
+{
+public:
+	int number;
+	int totalSolved;
+	int totalPenalty;
+	bool problemSolved[10];
+	int penalty[10];
+
+	contestant()
+	{
+		number = 0;
+		totalSolved = 0;
+		totalPenalty = 0;
+		for(int i = 0; i < 10; i++)
+		{
+			problemSolved[i] = false;
+			penalty[i] = 0;
+		}
+	}
+};
+
+void chart(contestant competitors[])
+{
+	for (int i = 0; i < 100; i++)
+	{
+		int max = i;
+		for (int j = i; j < 100; j++)
+			if (competitors[j].totalSolved > competitors[max].totalSolved)
+				max = j;
+		int tempNumber = competitors[max].number;
+		int tempSolved = competitors[max].totalSolved;
+		int tempPenalty = competitors[max].totalPenalty;
+		competitors[max].number = competitors[i].number;
+		competitors[max].totalSolved = competitors[i].totalSolved;
+		competitors[max].totalPenalty = competitors[i].totalPenalty;
+		competitors[i].number = tempNumber;
+		competitors[i].totalSolved = tempSolved;
+		competitors[i].totalPenalty = tempPenalty;
+	}
+
+	for (int i = 0; i < 100; i++)
+	{
+		int max = i;
+		for (int j = i; j < 100; j++)
+			if (competitors[j].totalSolved == competitors[max].totalSolved && competitors[j].totalPenalty < competitors[max].totalPenalty)
+				max = j;
+		int tempNumber = competitors[max].number;
+		int tempSolved = competitors[max].totalSolved;
+		int tempPenalty = competitors[max].totalPenalty;
+		competitors[max].number = competitors[i].number;
+		competitors[max].totalSolved = competitors[i].totalSolved;
+		competitors[max].totalPenalty = competitors[i].totalPenalty;
+		competitors[i].number = tempNumber;
+		competitors[i].totalSolved = tempSolved;
+		competitors[i].totalPenalty = tempPenalty;
+	}
+
+	for (int i = 0; i < 100; i++)
+	{
+		if (competitors[i].totalSolved != 0)
+			continue;
+		else
+		{
+			int min = i;
+			for (int j = i; j < 100; j++)
+				if (competitors[min].number > competitors[j].number)
+					min = j;
+			int temp = competitors[min].number;
+			competitors[min].number = competitors[i].number;
+			competitors[i].number = temp;
+		}
+	}
+
+	for (int i = 0; i < 100; i++)
+	{
+		if (competitors[i].number)
+			std::cout << competitors[i].number << " " << competitors[i].totalSolved << " " << competitors[i].totalPenalty << std::endl;
+	}
+}
+
+int main()
+{
+	contestant competitors[100];
+	bool firstRun = true;
+
+	std::string input;
+	getline(std::cin, input);
+	int numOfCases = atoi(input.c_str());
+	getline(std::cin, input);
+	while (true)
+	{
+		if (!numOfCases)
+			break;
+		getline(std::cin, input);
+
+		if (input.empty() || !std::cin)
+		{
+			if (!firstRun)
+				std::cout << std::endl;
+			firstRun = false;
+			chart(competitors);
+			if (!std::cin)
+				break;
+			for (int i = 0; i < 100; i++)
+			{
+				competitors[i].number = 0;
+				competitors[i].totalSolved = 0;
+				competitors[i].totalPenalty = 0;
+				for (int j = 0; j < 10; j++)
+				{
+					competitors[i].problemSolved[j] = false;
+					competitors[i].penalty[j] = 0;
+				}
+			}
+			numOfCases--;
+			continue;
+		}
+
+		if (!std::cin)
+			break;
+		size_t op = input.find_first_of(" ");
+		int cont = atoi(input.substr(0, op).c_str()) - 1;
+		size_t op2 = input.find_first_of(" ", ++op);
+		int prob = atoi(input.substr(op, op2).c_str()) - 1;
+		op = input.find_first_of(" ", ++op2);
+		int min = atoi(input.substr(op2, op).c_str());
+		char judge = input[++op];
+
+		if (judge == 'C')
+		{
+			if (!competitors[cont].problemSolved[prob])
+			{
+				competitors[cont].number = cont + 1;
+				competitors[cont].problemSolved[prob] = true;
+				competitors[cont].totalSolved++;
+				competitors[cont].totalPenalty += competitors[cont].penalty[prob] + min;
+			}
+		}
+		else if (judge == 'I')
+		{
+			if (!competitors[cont].problemSolved[prob])
+			{
+				competitors[cont].number = cont + 1;
+				competitors[cont].penalty[prob] += 20;
+			}
+		}
+		else
+			competitors[cont].number = cont + 1;
+	}
+
+	return 0;
+}

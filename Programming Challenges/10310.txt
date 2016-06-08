@@ -1,0 +1,95 @@
+---------- Forwarded message ----------
+From: UVa Online Judge <noreply@onlinejudge.org>
+Date: Thu, Dec 3, 2015 at 12:47 PM
+Subject: Submission 16531697 - Accepted
+To: Emmett Casey <elcasey@email.uark.edu>
+
+
+Hi,
+
+This is an automated response from UVa Online Judge.
+
+Your submission with number 16531697 for the problem 10310 - Dog and Gopher has succeeded with verdict Accepted.
+
+Congratulations! Now it is time to try a new problem.
+
+Best regards,
+
+The UVa Online Judge team
+
+
+import java.util.*;
+import java.text.DecimalFormat;
+
+class Main
+{
+	static int numberOfHoles;
+	static Coordinate gopher;
+	static Coordinate dog;
+	static Coordinate [] holes;
+
+	private static class Coordinate
+	{
+		double x;
+		double y;
+
+		public Coordinate(double X, double Y)
+		{
+			this.x = X;
+			this.y = Y;
+		}
+	}
+
+	public static void main(String[] args)
+	{
+		Scanner scan = new Scanner(System.in);
+		while (scan.hasNextInt())
+		{
+			numberOfHoles = scan.nextInt();
+
+			double tempX = scan.nextDouble();
+			double tempY = scan.nextDouble();
+			gopher = new Coordinate(tempX, tempY);
+			tempX = scan.nextDouble();
+			tempY = scan.nextDouble();
+			dog = new Coordinate(tempX, tempY);
+
+			holes = new Coordinate [numberOfHoles];
+			for (int i = 0; i < numberOfHoles; i++)
+			{
+				tempX = scan.nextDouble();
+				tempY = scan.nextDouble();
+				holes[i] = new Coordinate(tempX, tempY);
+			}
+
+			runAlg();
+		}
+	}
+
+	private static void runAlg()
+	{
+		for (Coordinate coord : holes)
+		{
+			double distanceGopher = distance(coord, gopher);
+			double distanceDog = distance(coord, dog);
+
+			if (distanceGopher * 2 <= distanceDog)
+			{
+				DecimalFormat dForm = new DecimalFormat("0.000");
+				System.out.print("The gopher can escape through the hole at (");
+				System.out.print(dForm.format(coord.x) + "," + dForm.format(coord.y));
+				System.out.println(").");	
+				return;
+			}
+		}
+
+		System.out.println("The gopher cannot escape.");
+	}
+
+	private static double distance(Coordinate pointFirst, Coordinate pointSecond)
+	{
+		double xDiffSquared = (pointSecond.x - pointFirst.x) * (pointSecond.x - pointFirst.x);
+		double yDiffSquared = (pointSecond.y - pointFirst.y) * (pointSecond.y - pointFirst.y);
+		return Math.sqrt(xDiffSquared + yDiffSquared);
+	}
+}

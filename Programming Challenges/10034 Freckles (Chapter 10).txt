@@ -1,0 +1,169 @@
+---------- Forwarded message ----------
+From: UVa Online Judge <noreply@onlinejudge.org>
+Date: Tue, Nov 10, 2015 at 9:26 PM
+Subject: Submission 16421566 - Accepted
+To: Emmett Casey <elcasey@email.uark.edu>
+
+
+Hi,
+
+This is an automated response from UVa Online Judge.
+
+Your submission with number 16421566 for the problem 10034 - Freckles has succeeded with verdict Accepted.
+
+Congratulations! Now it is time to try a new problem.
+
+Best regards,
+
+The UVa Online Judge team
+
+
+import java.util.Scanner;
+import java.util.PriorityQueue;
+import java.util.ArrayList;
+import java.util.Iterator;
+
+class Main
+{
+	static int num;
+	static Coordinate [] freckles;
+
+	static class Coordinate implements Comparable<Coordinate>
+	{
+		int number;
+		double x;
+		double y;
+		double [] neighbors;
+		double min;
+
+		Coordinate(double X, double Y, int NUMBER)
+		{
+			neighbors = new double [num];
+			number = NUMBER;
+			x = X;
+			y = Y;
+		}
+
+		Coordinate(Coordinate other)
+		{
+			neighbors = new double [num];
+			number = other.number;
+			x = other.x;
+			y = other.y;
+			min = other.min;
+			for (int i = 0; i < num; i++)
+				neighbors[i] = other.neighbors[i];
+		}
+
+		public int compareTo(Coordinate other)
+		{
+			if (min == other.min)
+				return 0;
+			else if (min > other.min)
+				return 1;
+			else
+				return -1;
+		}
+	}
+
+	public static void main(String[] args)
+	{
+		Scanner scan = new Scanner(System.in);
+		int n = scan.nextInt();
+		for (int i = 0; i < n; i++)
+		{
+			runAlg(scan);
+			if (i != n - 1)
+				System.out.println();
+		}
+	}
+
+	private static void runAlg(Scanner scan)
+	{
+		getInput(scan);
+		makeGraph();
+		System.out.println(String.format("%.2f", prims()));
+	}
+
+	private static void getInput(Scanner scan)
+	{
+		num = scan.nextInt();
+		freckles = new Coordinate [num];
+		for (int i = 0; i < num; i++)
+		{
+			double x = scan.nextDouble();
+			double y = scan.nextDouble();
+			freckles[i] = new Coordinate(x, y, i);
+		}
+	}
+
+	private static void makeGraph()
+	{
+		for (int i = 0; i < num; i++)
+		{
+			double x = freckles[i].x;
+			double y = freckles[i].y;
+
+			for (int j = 0; j < num; j++)
+			{
+				if (i != j)
+					freckles[i].neighbors[j] = distanceFormula(x, y, freckles[j].x, freckles[j].y);
+				else
+					freckles[i].neighbors[j] = Double.MAX_VALUE;
+			}
+		}
+	}
+
+	private static double distanceFormula(double x1, double y1, double x2, double y2)
+	{
+		x2 -= x1;
+		y2 -= y1;
+		x2 *= x2;
+		y2 *= y2;
+		x2 += y2;
+		return (double) Math.sqrt(x2);
+	}
+
+	private static double prims()
+	{
+		double answer = 0;
+		PriorityQueue<Coordinate> queue = new PriorityQueue<Coordinate>();
+		queue.add(freckles[0]);
+		while (!queue.isEmpty())
+			answer += a(queue.poll(), queue);
+		return answer;
+	}
+
+	private static double a(Coordinate freck, PriorityQueue<Coordinate> queue)
+	{
+		if (freck == freckles[0])
+		{
+			for (int i = 0; i < num; i++)
+				freckles[i].min = freck.neighbors[i];
+			for (int i = 1; i < num; i++)
+				queue.add(new Coordinate(freckles[i]));
+			return 0;
+		}
+		else
+		{
+			for (int i = 0; i < num; i++)
+				if (freck.neighbors[i] < freckles[i].min)
+					freckles[i].min = freck.neighbors[i];
+
+			Iterator<Coordinate> it = queue.iterator();
+			ArrayList<Coordinate> needToAdd = new ArrayList<Coordinate>();
+			while (it.hasNext())
+			{
+				Coordinate temp = it.next();
+				if (freckles[temp.number].min < temp.min)
+				{
+					it.remove();
+					needToAdd.add(freckles[temp.number]);
+				}
+			}
+			for (int i = 0; i < needToAdd.size(); i++)
+				queue.add(new Coordinate(needToAdd.get(i)));
+			return freck.min;
+		}
+	}
+}

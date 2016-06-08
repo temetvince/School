@@ -1,0 +1,81 @@
+---------- Forwarded message ----------
+From: UVa Online Judge <noreply@onlinejudge.org>
+Date: Sun, Dec 13, 2015 at 5:37 PM
+Subject: Submission 16580392 - Accepted
+To: Emmett Casey <elcasey@email.uark.edu>
+
+
+Hi,
+
+This is an automated response from UVa Online Judge.
+
+Your submission with number 16580392 for the problem 10088 - Trees on My Island has succeeded with verdict Accepted.
+
+Congratulations! Now it is time to try a new problem.
+
+Best regards,
+
+The UVa Online Judge team
+
+
+import java.util.*;
+import java.math.*;
+
+class Main
+{
+	static class Point
+	{
+		BigInteger x;
+		BigInteger y;
+
+		public Point(int X, int Y)
+		{
+			this.x = BigInteger.valueOf(X);
+			this.y = BigInteger.valueOf(Y);
+		}
+	}
+
+	public static void main(String[] args)
+	{
+		int n;
+		Point [] points;
+
+		Scanner scan = new Scanner(System.in);
+		while (true)
+		{
+			n = scan.nextInt();
+			if (n == 0)
+				break;
+			points = new Point [n + 1];
+			for (int i = 0; i < n; i++)
+			{
+				int x = scan.nextInt();
+				int y = scan.nextInt();
+				points[i] = new Point(x, y);
+			}
+			points[n] = points[0];
+			BigInteger area = areaOfPolygon(points);
+			BigInteger nPointsOnLine = BigInteger.ZERO;
+			for (int i = 0; i < points.length - 1; i++)
+			{
+				BigInteger xDiff = points[i + 1].x.subtract(points[i].x).abs();
+				BigInteger yDiff = points[i + 1].y.subtract(points[i].y).abs();
+				nPointsOnLine = nPointsOnLine.add(xDiff.gcd(yDiff));
+			}
+			System.out.println(area.subtract(nPointsOnLine.divide(BigInteger.valueOf(2))).add(BigInteger.ONE));
+		}
+	}
+
+	private static BigInteger areaOfPolygon(Point [] points)
+	{
+		BigInteger sum = BigInteger.ZERO;
+		for (int i = 0; i < points.length - 1; i++)
+		{
+			BigInteger p1 = points[i].x.multiply(points[i + 1].y);
+			BigInteger p2 = points[i].y.multiply(points[i + 1].x);
+			sum = sum.add(p1.subtract(p2));
+		}
+		sum = sum.divide(BigInteger.valueOf(2));
+		return sum.abs();
+	}
+}

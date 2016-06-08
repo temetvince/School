@@ -1,0 +1,46 @@
+---------- Forwarded message ----------
+From: UVa Online Judge <noreply@onlinejudge.org>
+Date: Thu, Dec 3, 2015 at 10:21 PM
+Subject: Submission 16533516 - Accepted
+To: Emmett Casey <elcasey@email.uark.edu>
+
+
+Hi,
+
+This is an automated response from UVa Online Judge.
+
+Your submission with number 16533516 for the problem 10215 - The Largest/Smallest Box ... has succeeded with verdict Accepted.
+
+Congratulations! Now it is time to try a new problem.
+
+Best regards,
+
+The UVa Online Judge team
+
+
+
+#include <iostream>
+#include <math.h>
+
+#define eps 1e-8
+
+using namespace std;
+
+int main()
+{
+	double length;
+	double width;
+	while (cin >> length >> width)
+	{
+		double answer = sqrt(length * length - length * width + width * width);
+		answer = length + width - answer;
+		answer /= 6;
+		double lowest = 0;
+		if (length < width)
+			lowest = length / 2;
+		else
+			lowest = width / 2;
+		printf("%.3f %.3f %.3f\n", answer + eps, 0.0, lowest + eps);
+	}
+	return 0 ;
+}

@@ -1,0 +1,61 @@
+From: UVa Online Judge <noreply@onlinejudge.org>
+Date: Monday, October 12, 2015
+Subject: Submission 16254904 - Accepted
+To: Emmett Casey <elcasey@email.uark.edu>
+
+
+Hi,
+
+This is an automated response from UVa Online Judge.
+
+Your submission with number 16254904 for the problem 10110 - Light, more light has succeeded with verdict Accepted.
+
+Congratulations! Now it is time to try a new problem.
+
+Best regards,
+
+The UVa Online Judge team
+
+
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+long long getinput()
+{
+        string input = "";
+        do
+                getline(cin, input);
+        while (!cin);
+        return atoll(input.c_str());
+}
+
+long long squareRt(long long n)
+{
+        long long i = 1;
+        while (n - i * i >= 0)
+                i++;
+        return --i;
+}
+
+void runAlg(long long n)
+{
+        long long squareRtN = squareRt(n);
+        if (squareRtN * squareRtN == n)
+                cout << "yes" << endl;
+        else
+                cout << "no" << endl;
+}
+
+int main()
+{
+        long long n = 1;
+        while (n)
+        {
+                n = getinput();
+                if (n)
+                        runAlg(n);
+        }
+        return 0;
+}

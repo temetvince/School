@@ -1,0 +1,67 @@
+Assignment 3
+Note:
+- Please download starter files (attached below) of your programming language and code on it, submit only these files to Moodle.
+- Make sure your code compile
+- I’ll only test on the constraint I give, so you don’t have to check if the input is in range.
+- You may not share or copy code, including code posted on the internet.  You must give credit to sources in comments included in your code.
+ 
+A)
+Class:                                    Assignment3A
+Method:                              int numPaint(String input)
+
+- String input represents several tiles. Each tile’s color is either black (B) or white (W). For example:
+
+Input = “BW” means 1st tile is black, 2nd tile is white.
+
+- You can choose any of the tiles and paint it over with either black or white. Our main goal is to paint so that every black tile is to the left of the white tiles. Return minimum number of paints needed. Please note that all white or all black after painting still satisfy our goal (example 3 below).
+
+Constraints: String input length is between 1 and 50 characters
+ 
+Example:
+·         input = “BBWWW”
+o   Return 0
+o   No need to paint anything
+·         input = "BWBWB"
+o   Return 2
+o   We can paint 2nd and 5th position of input: BWBWB -> BBBWW
+·         Input = “WWWWBBB”
+o   Return 3
+o   WWWWBBB -> WWWWWWW
+ 
+ 
+B)
+Class:                                    Assignment3B
+Method:                              int numStep(int[] sequence)
+ 
+- A sequence is defined as palindrome if the reverse of the sequence is the same as the original.
+For example: below sequences are all palindromes.
+·         {1, 3, 1}
+·         {9, 25, 25, 9}
+·         {100}
+- You are given an input sequence[ ]. You can replace any two adjacent numbers with their sum. Each replacement is counted as a step.
+ 
+- Return minimum number of steps to make the sequence a palindrome.
+ 
+Constraints:
+- sequence has 1 to 50 elements.
+- Each element in sequence is between 1 and 10000.
+ 
+Example:
+ 
+·         {9, 25, 25, 9}
+o   Return 0
+o   Already palindrome
+·         {1,1,1,3}
+o   Return 2
+o   We can replace:
+§  {1,1,1,3} -> {2,1,3}
+§  {2,1,3} -> {3,3}
+
+ 
+Assignment3A.cpp Assignment3A.cpp
+ 
+Assignment3A.java Assignment3A.java
+ 
+Assignment3B.cpp Assignment3B.cpp
+ 
+Assignment3B.java Assignment3B.java

@@ -1,0 +1,74 @@
+From: UVa Online Judge <noreply@onlinejudge.org>
+Date: Tuesday, October 13, 2015
+Subject: Submission 16262197 - Accepted
+To: Emmett Casey <elcasey@email.uark.edu>
+
+
+
+Hi,
+
+This is an automated response from UVa Online Judge.
+
+Your submission with number 16262197 for the problem 10168 - Summation of Four Primes has succeeded with verdictAccepted.
+
+Congratulations! Now it is time to try a new problem.
+
+Best regards,
+
+The UVa Online Judge team
+
+
+
+
+import java.math.BigInteger;
+import java.util.Scanner;
+import java.util.ArrayList;
+
+class Main
+{
+        public static void main (String[] args)
+        {
+                ArrayList<BigInteger> primes = findPrimesUpTo(new BigInteger("3163"), 100);
+                Scanner scan = new Scanner(System.in);
+                while (scan.hasNextLine())
+                {
+                        BigInteger n = new BigInteger(scan.nextLine());
+                        if (n.compareTo(new BigInteger("8")) < 0)
+                               System.out.println("Impossible.");
+                        else if (n.remainder(new BigInteger("2")).equals(BigInteger.ZERO))
+                        {
+                                n = n.subtract(new BigInteger("4"));
+                                BigInteger [] p = findPrimes(n, primes);
+                                System.out.println("2 2 " + p[0] + " " + p[1]);
+                        }
+                        else
+                        {
+                                n = n.subtract(new BigInteger("5"));
+                                BigInteger [] p = findPrimes(n, primes);
+                                System.out.println("2 3 " + p[0] + " " + p[1]);
+                        }
+                }
+                scan.close();
+        }
+
+        private static ArrayList<BigInteger> findPrimesUpTo(BigInteger max, int certainty)
+        {
+                ArrayList<BigInteger> primes = new ArrayList<BigInteger>();
+                BigInteger i = BigInteger.ZERO;
+                while (i.compareTo(max) < 0)
+                {
+                        if (i.isProbablePrime(certainty))
+                                primes.add(i);
+                        i = i.add(BigInteger.ONE);
+                }
+                return primes;
+        }
+
+        private static BigInteger [] findPrimes(BigInteger n, ArrayList<BigInteger> primes)
+        {
+                int i = 0;
+                while (!n.subtract(primes.get(i)).isProbablePrime(100))
+                        i++;
+                return new BigInteger [] {primes.get(i), n.subtract(primes.get(i))};
+        }
+}

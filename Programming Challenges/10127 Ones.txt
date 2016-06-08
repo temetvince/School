@@ -1,0 +1,64 @@
+From: UVa Online Judge <noreply@onlinejudge.org>
+Date: Mon, Sep 28, 2015 at 2:44 PM
+Subject: Submission 16178559 - Accepted
+To: Emmett Casey <elcasey@email.uark.edu>
+
+
+Hi,
+
+This is an automated response from UVa Online Judge.
+
+Your submission with number 16178559 for the problem 10127 - Ones has succeeded with verdict Accepted.
+
+Congratulations! Now it is time to try a new problem.
+
+Best regards,
+
+The UVa Online Judge team
+
+
+#include <string>
+#include <iostream>
+#include <algorithm>
+
+int remainderAlg(const int n, const int b)
+{
+	int v = 0;
+	for (int i = 0; i < n; i++)
+		v = (v * 10 + 1) % b;
+	return v;
+}
+
+int runAlg(const int n)
+{
+	int v = 0;
+	do
+		v++;
+	while (remainderAlg(v, n));
+	return v;
+}
+
+int getInput()
+{
+	std::string input;
+	do
+	{
+		input = "";
+		getline(std::cin, input);
+		if (!std::cin)
+			exit(0);
+	}
+	while (input.empty());
+
+	return atoll(input.c_str());
+}
+
+int main()
+{
+	while (true)
+	{
+		int a = getInput();
+		std::cout << runAlg(a) << std::endl;
+	}
+	return 0;
+}

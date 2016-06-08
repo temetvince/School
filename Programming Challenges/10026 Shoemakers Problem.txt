@@ -1,0 +1,100 @@
+From: UVa Online Judge <noreply@onlinejudge.org>
+Date: Wed, Sep 23, 2015 at 1:25 PM
+Subject: Submission 16152825 - Accepted
+To: Emmett Casey <elcasey@email.uark.edu>
+
+
+Hi,
+
+This is an automated response from UVa Online Judge.
+
+Your submission with number 16152825 for the problem 10026 - Shoemaker's Problem has succeeded with verdict Accepted.
+
+Congratulations! Now it is time to try a new problem.
+
+Best regards,
+
+The UVa Online Judge team
+
+
+
+
+#include <iostream>
+#include <string>
+#include <algorithm>
+
+class shoe
+{
+public:
+	float cost;
+	int order;
+};
+
+void orderArray(shoe * a, const int n)
+{
+	for (int i = 0; i < n; i++)
+	{
+		int maxC = i;
+		for (int j = i; j < n; j++)
+		{
+			if (a[j].cost > a[maxC].cost)
+				maxC = j;
+			else if (a[j].cost == a[maxC].cost && a[j].order < a[maxC].order)
+				maxC = j;
+			else
+				continue;
+		}
+		float tempC = a[i].cost;
+		int tempO = a[i].order;
+		a[i].cost = a[maxC].cost;
+		a[i].order = a[maxC].order;
+		a[maxC].cost = tempC;
+		a[maxC].order = tempO;
+	}
+}
+
+void runAlg(const int n)
+{
+	shoe * workload = new shoe[n];
+	for (int i = 0; i < n; i++)
+	{
+		std::string input = "";
+		do
+			getline(std::cin, input);
+		while (input.empty());
+		workload[i].order = i;
+		size_t op = input.find_first_of(" ");
+		float days = atof(input.substr(0, op).c_str());
+		float fine = atof(input.substr(++op, std::string::npos).c_str());
+		workload[i].cost = fine / days;
+	}
+	orderArray(workload, n);
+	for (int i = 0; i < n; i++)
+	{
+		std::cout << workload[i].order + 1;
+		if (i != n - 1)
+			std::cout << " ";
+		else
+			std::cout << std::endl;
+	}
+}
+
+int main()
+{
+	std::string input = "";
+	getline(std::cin, input);
+	int nCases = atoi(input.c_str());
+	for (int i = 0; i < nCases; i++)
+	{
+		input = "";
+		do
+			getline(std::cin, input);
+		while (input.empty());
+		int nShoes = atoi(input.c_str());
+		if (i)
+			std::cout << std::endl;
+		runAlg(nShoes);
+	}
+	return 0 ;
+
+}

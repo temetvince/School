@@ -1,0 +1,77 @@
+#include <iostream>
+#include <string>
+#include <algorithm>
+
+using namespace std;
+
+string findLongestSubstring(string a, string b);
+
+int main()
+{
+	bool firstRun = true;
+	string input = "null";
+	while (true)
+	{
+		string a = "";
+		string b = "";
+
+		getline(cin, input);
+		a = input;
+		if (!cin)
+			break;
+		getline(cin, input);
+		b = input;
+		if (!cin)
+			break;
+
+		if (a.empty() || b.empty())
+		{
+			if (!firstRun)
+				cout << endl;
+			firstRun = false;
+			continue;
+		}
+		else
+		{
+			if (!firstRun)
+				cout << endl;
+			firstRun = false;
+			string answer = findLongestSubstring(a, b);
+			cout << answer;
+		}
+	}
+	cout << endl;
+	return 0;
+}
+
+string findLongestSubstring(string a, string b)
+{
+	string shorter = "";
+	string longer = "";
+	string answer = "";
+
+	sort(a.begin(), a.end());
+	sort(b.begin(), b.end());
+
+	if (a.size() > b.size())
+	{
+		shorter = b;
+		longer = a;
+	}
+	else
+	{
+		shorter = a;
+		longer = b;
+	}
+
+	for (int i = 0; i < shorter.size(); i++)
+		for (int j = 0; j < longer.size(); j++)
+			if (shorter.at(i) == longer.at(j))
+			{
+				answer += shorter.at(i);
+				longer.erase(j, 1);
+				break;
+			}
+
+	return answer;
+}

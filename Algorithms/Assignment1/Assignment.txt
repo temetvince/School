@@ -1,0 +1,114 @@
+Assignment 1
+1A)
+Class:                             Assignment1A
+Method Signature:       int solve(String input)
+ 
+The format for the string input is: <Number><Operation>< Number >
+ 
+< Number > is integer from 1 to 10000.
+< Number > can contain leading zeros
+< Operation > is Math operations:  +, -, *, /
+ 
+Return the result of operation
+ 
+Example:
+·        solve(“1+2”)
+o   Returns: 3
+·        solve(“3/2”)
+o   Returns: 1
+·        solve("000000000014/00000000002")
+o   Returns: 7
+
+
+1B)
+
+
+Class:                         Assignment1B
+ 
+Implement Strassen’s algorithm (section 2.5) to multiply matrices A and B.
+
+The threshold is 64. The size of the matrices is 2k x 2k (k is between 1 and 16), which are square matrices.
+
+Get input matrices A and B from an input file. The first line will be dimension of the matrices; next lines will be elements in matrices. Print the resulting matrix to an output file. 
+
+The type of element in matrix is double. Remember to name the files as input.txt and output.txt
+
+ 
+
+Example:
+
+Suppose we have a matrix A (4x4):
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+ 
+
+and matrix B:
+
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+ 
+
+input.txt file:
+
+4
+
+1 2 3 4
+
+5 6 7 8
+
+9 10 11 12
+
+13 14 15 16
+
+17 18 19 20
+
+21 22 23 24
+
+25 26 27 28
+
+29 30 31 32
+
+ 
+
+output.txt file:
+
+250 260 270 280
+
+618 644 670 696
+
+986 1028 1070 1112
+
+1354 1412 1470 1528
+
+ 
+
+Note: Please include your name in your code, make sure it can compile before submitting

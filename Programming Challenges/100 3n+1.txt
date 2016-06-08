@@ -1,0 +1,105 @@
+---------- Forwarded message ----------
+From: UVa Online Judge <noreply@onlinejudge.org>
+Date: Tue, Aug 25, 2015 at 12:00 PM
+Subject: Submission 15991033 - Accepted
+To: Emmett Casey <elcasey@email.uark.edu>
+
+
+Hi,
+
+This is an automated response from UVa Online Judge.
+
+Your submission with number 15991033 for the problem 100 - The 3n + 1 problem has succeeded with verdict Accepted.
+
+Congratulations! Now it is time to try a new problem.
+
+Best regards,
+
+The UVa Online Judge team
+
+
+
+import java.io.IOException;
+import java.util.StringTokenizer;
+
+class Main
+{
+	public static void main(String[] args)
+	{
+		String in;
+		StringTokenizer inString;
+		while ((in = ReadLn(255)) != null)
+		{
+			int max = 0;
+			inString = new StringTokenizer(in);
+			int i = Integer.valueOf(inString.nextToken());
+			int j = Integer.valueOf(inString.nextToken());
+
+			if(i < j)
+				max = getLargestCycleLength(i, j);
+			else
+				max = getLargestCycleLength(j, i);
+
+			System.out.println(i + " " + j + " " + max);
+		}
+	}
+
+	private static int getLargestCycleLength(int i, int j)
+	{
+		int max = 0;
+		while(i <= j)
+		{
+			int count = runProblem(i);
+			if(count > max)
+				max = count;
+			i++;
+		}
+		return max;
+	}
+
+	private static int runProblem(int n)
+	{
+		int count = 0;
+		while(n != 1)
+		{
+			n = getNext(n);
+			count++;
+		}
+		return ++count;
+	}
+
+	private static int getNext(int current)
+	{
+		int next = 0;
+		if(current % 2 == 0)
+			next = current / 2;
+		else
+			next = current * 3 + 1;
+		return next;
+	}
+
+	//Provided by uva.onlinejudge.org
+	private static String ReadLn (int maxLg)
+    {
+        byte lin[] = new byte [maxLg];
+        int lg = 0, car = -1;
+        String line = "";
+
+        try
+        {
+            while (lg < maxLg)
+            {
+                car = System.in.read();
+                if ((car < 0) || (car == '\n')) break;
+                lin [lg++] += car;
+            }
+        }
+        catch (IOException e)
+        {
+            return (null);
+        }
+
+        if ((car < 0) && (lg == 0)) return (null);  // eof
+        return (new String (lin, 0, lg));
+    }
+}

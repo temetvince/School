@@ -1,0 +1,75 @@
+From: UVa Online Judge <noreply@onlinejudge.org>
+Date: Thu, Sep 17, 2015 at 10:08 AM
+Subject: Submission 16117907 - Accepted
+To: Emmett Casey <elcasey@email.uark.edu>
+
+
+Hi,
+
+This is an automated response from UVa Online Judge.
+
+Your submission with number 16117907 for the problem 10041 - Vito's Family has succeeded with verdict Accepted.
+
+Congratulations! Now it is time to try a new problem.
+
+Best regards,
+
+The UVa Online Judge team
+
+
+
+
+
+#include <iostream>
+#include <string>
+#include <algorithm>
+
+int main()
+{
+	std::string input = "";
+	getline(std::cin, input);
+	int n = atoi(input.c_str());
+
+	for (int i = 0; i < n; i++)
+	{
+		getline(std::cin, input);
+		if (!std::cin)
+			break;
+		else if (input.empty())
+			continue;
+		else
+		{
+			size_t op = input.find_first_of(" ");
+			int relatives = atoi(input.substr(0, op).c_str());
+			input = input.substr(op + 1, std::string::npos);
+			int * street = new int[relatives];
+
+			for (int j = 0; j < relatives; j++)
+			{
+				op = input.find_first_of(" ");
+				street[j] = atoi(input.substr(0, op).c_str());
+				input = input.substr(op + 1, std::string::npos);
+			}
+			for (int j = 0; j < relatives; j++)
+			{
+				int min = j;
+				for (int k = j; k < relatives; k++)
+					if (street[k] < street[min])
+						min = k;
+				int temp = street[j];
+				street[j] = street[min];
+				street[min] = temp;
+			}
+
+			int answer = 0;
+			for (int j = 0; j < relatives; j++)
+				answer += abs(street[j] - street[relatives/2]);
+			std::cout << answer << std::endl;
+			
+			delete [] street;
+			street = NULL;
+		}
+	}
+
+	return 0 ;
+}

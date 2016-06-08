@@ -1,0 +1,84 @@
+---------- Forwarded message ----------
+From: UVa Online Judge <noreply@onlinejudge.org>
+Date: Tue, Nov 24, 2015 at 6:32 PM
+Subject: Submission 16486857 - Accepted
+To: Emmett Casey <elcasey@email.uark.edu>
+
+
+Hi,
+
+This is an automated response from UVa Online Judge.
+
+Your submission with number 16486857 for the problem 10177 - (2/3/4)-D Sqr/Rects/Cubes/Boxes? has succeeded with verdict Accepted.
+
+Congratulations! Now it is time to try a new problem.
+
+Best regards,
+
+The UVa Online Judge team
+
+
+import java.util.*;
+
+class Main
+{
+	static node [] hive;
+
+	static class node
+	{
+		long s2;
+		long s3;
+		long s4;
+		long r2;
+		long r3;
+		long r4;
+	}
+
+	public static void main(String[] args)
+	{
+		populateHive();
+		Scanner scan = new Scanner(System.in);
+		while (scan.hasNextInt())
+		{
+			int n = scan.nextInt();
+			node ans = hive[n];
+			System.out.print(ans.s2 + " " + ans.r2 + " " + ans.s3 + " ");
+			System.out.print(ans.r3 + " " + ans.s4 + " " + ans.r4 + '\n');
+		}
+	}
+
+	private static void populateHive()
+	{
+		hive = new node [101];
+		for (int i = 0; i < hive.length; i++)
+			hive[i] = new node();
+
+		node st = hive[0];
+		st.s2 = 0;
+		st.s3 = 0;
+		st.s4 = 0;
+		st.r2 = 0;
+		st.r3 = 0;
+		st.r4 = 0;
+
+		for (int i = 1; i < hive.length; i++)
+		{
+			st = hive[i];
+			node stPrev = hive[i - 1];
+			long power = i * i;
+			st.s2 = power + stPrev.s2;
+			power *= i;
+			st.s3 = power + stPrev.s3;
+			power *= i;
+			st.s4 = power + stPrev.s4;
+			long rectVal = i * (i + 1);
+			rectVal /= 2;
+			power = rectVal * rectVal;
+			st.r2 = power - st.s2;
+			power *= rectVal;
+			st.r3 = power - st.s3;
+			power *= rectVal;
+			st.r4 = power - st.s4;
+		}
+	}
+}

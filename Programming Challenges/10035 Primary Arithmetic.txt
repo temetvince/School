@@ -1,0 +1,110 @@
+From: UVa Online Judge <noreply@onlinejudge.org>
+Date: Fri, Sep 25, 2015 at 2:40 PM
+Subject: Submission 16164393 - Accepted
+To: Emmett Casey <elcasey@email.uark.edu>
+
+
+Hi,
+
+This is an automated response from UVa Online Judge.
+
+Your submission with number 16164393 for the problem 10035 - Primary Arithmetic has succeeded with verdict Accepted.
+
+Congratulations! Now it is time to try a new problem.
+
+Best regards,
+
+The UVa Online Judge team
+
+
+
+#include <string>
+#include <iostream>
+
+void printAnswer(const int nCarries)
+{
+	if (!nCarries)
+		std::cout << "No carry operation.";
+	else if (nCarries == 1)
+		std::cout << nCarries << " carry operation.";
+	else
+		std::cout << nCarries << " carry operations.";
+
+	std::cout << std::endl;
+}
+
+int getNumberOfCarries(std::string * nums)
+{
+	int answer = 0;
+	int carry = 0;
+	for (int i = nums[0].size() - 1; i >= 0; i--)
+	{
+		int a = nums[0][i] - '0';
+		int b = nums[1][i] - '0';
+		int c = a + b + carry;
+		if (c > 9)
+		{
+			answer++;
+			carry = 1;
+		}
+		else
+			carry = 0;
+	}
+	return answer;
+}
+
+std::string * setNums(const std::string input)
+{
+	std::string * nums = new std::string[2];
+	std::string tNum;
+
+	size_t op = input.find_first_of(" ");
+	nums[0] = input.substr(0, op);
+	tNum = input.substr(op + 1, std::string::npos);
+
+	if (nums[0].size() < tNum.size())
+	{
+		std::string temp = nums[0];
+		nums[0] = tNum;
+		tNum = temp;
+	}
+
+	int diff = nums[0].size() - tNum.size();
+	std::string zeros;
+	for (int i = 0; i < diff; i++)
+		zeros += "0";
+	nums[1] = zeros + tNum;
+
+	return nums;
+}
+
+std::string getInput()
+{
+	std::string input;
+	do
+	{
+		input = "";
+		getline(std::cin, input);
+	}
+	while (input.empty());
+	return input;	
+}
+
+int main()
+{
+	while (true)
+	{
+		const std::string input = getInput();
+		std::string * nums = setNums(input);
+		if (nums[0] == "0" && nums[1] == "0")
+		{
+			delete [] nums;
+			break;
+		}
+		const int nCarries = getNumberOfCarries(nums);
+		printAnswer(nCarries);
+		delete [] nums;
+		nums = NULL;
+	}
+	return 0 ;
+}

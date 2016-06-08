@@ -1,0 +1,62 @@
+From: UVa Online Judge <noreply@onlinejudge.org>
+Date: Mon, Oct 5, 2015 at 1:25 PM
+Subject: Submission 16214343 - Accepted
+To: Emmett Casey <elcasey@email.uark.edu>
+
+
+Hi,
+
+This is an automated response from UVa Online Judge.
+
+Your submission with number 16214343 for the problem 10213 - How Many Pieces of Land ? has succeeded with verdict Accepted.
+
+Congratulations! Now it is time to try a new problem.
+
+Best regards,
+
+The UVa Online Judge team
+
+
+
+
+import java.math.BigInteger;
+import java.util.Scanner;
+
+class Main
+{
+	public static void main(String[] args)
+	{
+		Scanner scan = new Scanner(System.in);
+		String input = scan.nextLine();
+		int cases = Integer.parseInt(input);
+		for (int i = 0; i < cases; i++)
+			System.out.println(runAlg(new BigInteger(scan.nextLine())));
+		scan.close();
+	}
+
+	private static BigInteger runAlg(BigInteger n)
+	{
+		BigInteger answer = BigInteger.ONE;
+		answer = answer.add(choose(n, new BigInteger("2")));
+		answer = answer.add(choose(n, new BigInteger("4")));
+		return answer;
+	}
+
+	private static BigInteger choose(BigInteger n, BigInteger k)
+	{
+		if (k.compareTo(n) > 0)
+			return BigInteger.ZERO;
+		else if (k.equals(BigInteger.ZERO))
+			return BigInteger.ONE;
+		else if (k.compareTo(n.divide(new BigInteger("2"))) > 0)
+			return choose(n, n.subtract(k));
+		else
+		{
+			BigInteger t = n.subtract(BigInteger.ONE);
+			BigInteger tk = k.subtract(BigInteger.ONE);
+			t = choose(t, tk);
+			t = n.multiply(t);
+			return t.divide(k);
+		}
+	} 
+}

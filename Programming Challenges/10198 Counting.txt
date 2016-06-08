@@ -1,0 +1,50 @@
+From: UVa Online Judge <noreply@onlinejudge.org>
+Date: Mon, Oct 5, 2015 at 2:25 PM
+Subject: Submission 16214633 - Accepted
+To: Emmett Casey <elcasey@email.uark.edu>
+
+
+Hi,
+
+This is an automated response from UVa Online Judge.
+
+Your submission with number 16214633 for the problem 10198 - Counting has succeeded with verdict Accepted.
+
+Congratulations! Now it is time to try a new problem.
+
+Best regards,
+
+The UVa Online Judge team
+
+
+
+import java.math.BigInteger;
+import java.util.Scanner;
+
+class Main
+{
+	public static void main(String[] args)
+	{
+		BigInteger[] nums = runAlg(1000);
+		 Scanner scan = new Scanner(System.in);
+		 while (scan.hasNextLine())
+		 	System.out.println(nums[Integer.parseInt(scan.nextLine())]);
+		 scan.close();
+	}
+
+	private static BigInteger[] runAlg(int max)
+	{
+		BigInteger[] nums = new BigInteger[max + 1];
+		nums[0] = BigInteger.ONE;
+		for (int i = 1; i < max + 1; i++)
+		{
+			if (i >= 1)
+				nums[i] = (new BigInteger("2")).multiply(nums[i - 1]);
+			if (i >= 2)
+				nums[i] = nums[i].add(nums[i - 2]);
+			if (i >= 3)
+				nums[i] = nums[i].add(nums[i - 3]);
+		}
+		return nums;
+	}
+}

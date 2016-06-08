@@ -1,0 +1,35 @@
+Assignment 4
+Note:
+- Download starter files (attached below) of your programming language and code on it. I have small request that you upload only the two source files (.cpp or .java) and additional files (such as new java class if needed) to Moodle, don’t upload zip project folder. It will save me time on organizing your files.
+- You may not share or copy code, including code posted on the internet.  You must give credit to sources in comments included in your code.
+ 
+ 
+A)
+Class:                                     Assignment4A
+Method:                              int minPrice(String[] tiles)
+ 
+- Suppose we have several uncolored tiles that need to be painted.
+- The input tiles[i] represents the price to paint ith tile in Black, Gray, and White. For instance:
+{"2 90 90", "90 2 90"} means the prices to paint Black, Gray, White for 1st tile are 2, 90, 90 respectively. Similarly for 2nd tile prices are 90, 2, 90.
+- Our goal is to NOT paint the same color for two adjacent tiles. 
+- Return the total minimum price.
+
+Constraint:
+- Tiles contain between 1 and 20 elements.
+- The price is from 1 to 1000.
+ 
+Examples:
+·         {"2 90 90", "90 2 90", "90 90 2"}
+o   Return: 6
+o   2+2+2
+·         {"5 100 100", "100 100 100", "5 100 100"}
+o   Return: 110
+o   5+100+5
+·         {"30 44 87", "53 64 61", "17 93 103"}
+o   Return: 108
+o   30+61+17
+
+ 
+Assignment4A.cpp Assignment4A.cpp
+ 
+Assignment4A.java Assignment4A.java

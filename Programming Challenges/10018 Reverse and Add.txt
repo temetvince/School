@@ -1,0 +1,71 @@
+From: UVa Online Judge <noreply@onlinejudge.org>
+Date: Mon, Sep 28, 2015 at 12:57 PM
+Subject: Submission 16178156 - Accepted
+To: Emmett Casey <elcasey@email.uark.edu>
+
+
+Hi,
+
+This is an automated response from UVa Online Judge.
+
+Your submission with number 16178156 for the problem 10018 - Reverse and Add has succeeded with verdict Accepted.
+
+Congratulations! Now it is time to try a new problem.
+
+Best regards,
+
+The UVa Online Judge team
+
+
+
+#include <string>
+#include <iostream>
+#include <algorithm>
+
+long long reverse(const long long n)
+{
+	long long temp = n;
+	long long nReverse = 0;
+	while (temp)
+	{
+		nReverse = nReverse * 10 + (temp % 10);
+    	temp /= 10;
+	}
+	return nReverse;
+}
+
+long long runAlg(const long long n, int & count)
+{
+	long long answer = reverse(n);
+	answer += n;
+	if (!(answer - reverse(answer)))
+		return answer;
+	else
+		return answer = runAlg(answer, ++count);
+}
+
+long long getInput()
+{
+	std::string input;
+	do
+	{
+		input = "";
+		getline(std::cin, input);
+	}
+	while (input.empty());
+
+	return atoll(input.c_str());
+}
+
+int main()
+{
+	const int n = getInput();
+	for (int i = 0; i < n; i++)
+	{
+		int count = 1;
+		long long a = getInput();
+		long long answer = runAlg(a, count);
+		std::cout << count << " " << answer << std::endl;
+	}
+	return 0 ;
+}

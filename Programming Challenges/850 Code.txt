@@ -1,0 +1,95 @@
+#include <iostream>
+#include <vector>
+#include <string>
+
+using namespace std;
+
+void putTogetherFiles();
+int findBrownFox();
+bool test(int);
+void output(int);
+char decrypt(char, int);
+
+vector<string> fileParts;
+string decryptKey = "the quick brown fox jumps over the lazy dog";
+
+int main()
+{
+	string input = "";
+	getline(cin, input);
+	int numberOfCases = atoi(input.c_str());
+	getline(cin, input);
+
+	while (numberOfCases != 0)
+	{
+		getline(cin, input);
+		if (input.empty() || !cin)
+		{
+			if (fileParts.size() != 0)
+				putTogetherFiles();
+			vector<string>().swap(fileParts);
+			numberOfCases--;
+			if (numberOfCases != 0)
+				cout << endl << endl;
+			else
+				cout << endl;
+		}
+		else
+			fileParts.push_back(input);
+	}
+	return 0;
+}
+
+void putTogetherFiles()
+{
+	int brownFox = findBrownFox();
+	if (brownFox == -1)
+	{
+		cout << "No solution.";
+	}
+	else
+		output(brownFox);
+}
+
+int findBrownFox()
+{
+	for (int i = 0; i < fileParts.size(); i++)
+		if (fileParts.at(i).length() == 43)
+			if (test(i))
+				return i;
+	return -1;
+}
+
+bool test(const int index)
+{
+	string test = "";
+	for (int i = 0; i < fileParts.at(index).length(); i++)
+	{
+		test += decrypt(fileParts.at(index)[i], index);
+		if (fileParts.at(index)[i] != ' ' && decryptKey[i] == ' ')
+			return false;
+	}
+	if (test == decryptKey)
+		return true;
+	else
+		return false;
+}
+
+void output(const int k)
+{
+	for (int i = 0; i < fileParts.size(); i++)
+	{
+		for (int j = 0; j < fileParts.at(i).length(); j++)
+			cout << decrypt(fileParts.at(i)[j], k);
+		if (i != fileParts.size() - 1)
+			cout << endl;
+	}
+}
+
+char decrypt(const char j, const int k)
+{
+	for (int i = 0; i < fileParts.at(k).length(); i++)
+		if (j == fileParts.at(k)[i])
+			return decryptKey[i];
+	return '0';
+}

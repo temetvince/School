@@ -1,0 +1,158 @@
+
+---------- Forwarded message ----------
+From: UVa Online Judge <noreply@onlinejudge.org>
+Date: Sun, Aug 30, 2015 at 12:41 PM
+Subject: Submission 16019564 - Accepted
+To: Emmett Casey <elcasey@email.uark.edu>
+
+
+Hi,
+
+This is an automated response from UVa Online Judge.
+
+Your submission with number 16019564 for the problem 10189 - Minesweeper has succeeded with verdict Accepted.
+
+Congratulations! Now it is time to try a new problem.
+
+Best regards,
+
+The UVa Online Judge team
+
+
+
+import java.io.IOException;
+import java.util.StringTokenizer;
+
+class Main
+{
+	private static int n = -1;
+	private static int m = -1;
+	private static int count = 0;
+	private static int fieldNumber = 0;
+	private static String [][] field = new String[0][0];
+
+	public static void main(String[] args)
+	{
+		String in;
+		StringTokenizer inString;
+		while ((in = ReadLn(255)) != null)
+		{
+			inString = new StringTokenizer(in);
+			String firstToken = inString.nextToken();
+
+			if(firstToken.charAt(0) == '*' || firstToken.charAt(0) == '.')
+				updateField(firstToken);
+			else
+			{
+				if(n != -1)
+				{
+					findMines();
+					printField();
+					if(firstToken.charAt(0) != '0')
+						System.out.println();
+				}
+				if(firstToken.charAt(0) == '0')
+					return;
+				newField(firstToken, inString);
+			}
+		}
+	}
+
+	private static void updateField(String firstToken)
+	{
+		for(int i = 0; i < m; i++)
+			field[count][i] = Character.toString(firstToken.charAt(i));
+		count++;
+	}
+
+	private static void newField(String firstToken, StringTokenizer inString)
+	{
+		n = Integer.valueOf(firstToken);
+		m = Integer.valueOf(inString.nextToken());
+		field = new String[n][m];
+		count = 0;
+		fieldNumber++;		
+	}
+
+	private static void printField()
+	{
+		System.out.println("Field #" + fieldNumber + ":");
+		for(int i = 0; i < n; i++)
+		{
+			for(int j = 0; j < m; j++)
+			{
+				System.out.print(field[i][j]);
+			}
+			System.out.println();
+		}
+	}
+
+	private static void findMines()
+	{
+		for(int i = 0; i < n; i++)
+			for(int j = 0; j < m; j++)
+				if(!field[i][j].equals("*"))
+					field[i][j] = Integer.toString(numberOfSurroundingMines(i, j));
+	}
+
+	private static int numberOfSurroundingMines(int x, int y)
+	{
+		int mine = 0;
+
+		if(isMine(x-1, y-1))
+			mine++;
+		if(isMine(x, y-1))
+			mine++;
+		if(isMine(x+1, y-1))
+			mine++;
+		if(isMine(x-1, y))
+			mine++;
+		if(isMine(x+1, y))
+			mine++;
+		if(isMine(x-1, y+1))
+			mine++;
+		if(isMine(x, y+1))
+			mine++;
+		if(isMine(x+1, y+1))
+			mine++;
+
+		return mine;
+	}
+
+	private static Boolean isMine(int x, int y)
+	{
+		if(x < 0 || x > n-1)
+			return false;
+		else if(y < 0 || y > m-1)
+			return false;
+		else if(field[x][y].equals("*"))
+			return true;
+		else
+			return false;
+	}
+
+	//Provided by uva.onlinejudge.org
+	private static String ReadLn (int maxLg)
+    {
+        byte lin[] = new byte [maxLg];
+        int lg = 0, car = -1;
+        String line = "";
+
+        try
+        {
+            while (lg < maxLg)
+            {
+                car = System.in.read();
+                if ((car < 0) || (car == '\n')) break;
+                lin [lg++] += car;
+            }
+        }
+        catch (IOException e)
+        {
+            return (null);
+        }
+
+        if ((car < 0) && (lg == 0)) return (null);  // eof
+        return (new String (lin, 0, lg));
+    }
+}

@@ -1,0 +1,94 @@
+---------- Forwarded message ----------
+From: UVa Online Judge <noreply@onlinejudge.org>
+Date: Fri, Oct 30, 2015 at 2:27 PM
+Subject: Submission 16359079 - Accepted
+To: Emmett Casey <elcasey@email.uark.edu>
+
+
+Hi,
+
+This is an automated response from UVa Online Judge.
+
+Your submission with number 16359079 for the problem 10004 - Bicoloring has succeeded with verdict Accepted.
+
+Congratulations! Now it is time to try a new problem.
+
+Best regards,
+
+The UVa Online Judge team
+
+
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+class Main
+{
+ public static void main(String[] args)
+ {
+  Scanner scan = new Scanner(System.in);
+  while (true)
+  {
+   ArrayList<Vertex> verts = new ArrayList<Vertex>();
+   int vertecies = scan.nextInt();
+   if (vertecies == 0)
+    break;
+   for (int i = 0; i < vertecies; i++)
+    verts.add(new Vertex());
+   int edges = scan.nextInt();
+   for (int i = 0; i < edges; i++)
+   {
+    int v0 = scan.nextInt();
+    int v1 = scan.nextInt();
+    verts.get(v0).connected.add(verts.get(v1));
+    verts.get(v1).connected.add(verts.get(v0));
+   }
+   runAlg(verts.get(0), true);
+   Boolean quit = false;
+   for (int i = 0; i < verts.size(); i++)
+   {
+    if (quit)
+     break;
+    for (int j = 0; j < verts.get(i).connected.size(); j++)
+    {
+     if (verts.get(i).connected.get(j).colored == verts.get(i).colored)
+     {
+      quit = true;
+      break;
+     }
+    }
+   }
+   if (quit)
+    System.out.println("NOT BICOLORABLE.");
+   else
+    System.out.println("BICOLORABLE.");
+  }
+ }
+
+ private static class Vertex
+ {
+  Boolean colored;
+  Boolean visited;
+  ArrayList<Vertex> connected;
+
+  public Vertex()
+  {
+   visited = false;
+   connected = new ArrayList<Vertex>();
+  }
+ }
+
+ private static void runAlg(Vertex vert, Boolean val)
+ {
+  vert.colored = val;
+  vert.visited = true;
+  if (vert.connected.size() == 0)
+   return;
+  for (int i = 0; i < vert.connected.size(); i++)
+  {
+   if (!vert.connected.get(i).visited)
+    runAlg(vert.connected.get(i), !val);
+  }
+  return;
+ }
+}

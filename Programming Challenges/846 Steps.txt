@@ -1,0 +1,45 @@
+From: UVa Online Judge <noreply@onlinejudge.org>
+Date: Mon, Oct 5, 2015 at 2:52 PM
+Subject: Submission 16214724 - Accepted
+To: Emmett Casey <elcasey@email.uark.edu>
+
+
+Hi,
+
+This is an automated response from UVa Online Judge.
+
+Your submission with number 16214724 for the problem 846 - Steps has succeeded with verdict Accepted.
+
+Congratulations! Now it is time to try a new problem.
+
+Best regards,
+
+The UVa Online Judge team
+
+
+
+import java.util.Scanner;
+
+class Main
+{
+	public static void main(String[] args)
+	{
+		Scanner scan = new Scanner(System.in);
+		String input = scan.nextLine();
+		int cases = Integer.parseInt(input);
+		for (int i = 0; i < cases; i++)
+		{
+			int a = scan.nextInt();
+			int b = scan.nextInt();
+			System.out.println(runAlg(a, b));
+		}
+		scan.close();
+	}
+
+	private static int runAlg(int a, int b)
+	{
+		double temp = (b - a) * 4 - 1;
+		int answer = (int) Math.sqrt(temp);
+		return answer;
+	}
+}

@@ -1,0 +1,131 @@
+From: UVa Online Judge <noreply@onlinejudge.org>
+Date: Tuesday, October 13, 2015
+Subject: Submission 16263096 - Accepted
+To: Emmett Casey <elcasey@email.uark.edu>
+
+
+Hi,
+
+This is an automated response from UVa Online Judge.
+
+Your submission with number 16263096 for the problem 10104 - Euclid Problem has succeeded with verdict Accepted.
+
+Congratulations! Now it is time to try a new problem.
+
+Best regards,
+
+The UVa Online Judge team
+
+
+
+import java.math.BigInteger;
+import java.util.Scanner;
+import java.util.ArrayList;
+
+class Main
+{
+        public static void main (String[] args)
+        {
+                Scanner scan = new Scanner(System.in);
+                while (scan.hasNextLine())
+                {
+                        String input = scan.nextLine();
+                        String [] inputSplit = input.split(" ");
+                        BigInteger a = new BigInteger(inputSplit[0]);
+                        BigInteger b = new BigInteger(inputSplit[1]);
+                        BigInteger u = Gcd.returnU(a, b);
+                        BigInteger v = Gcd.returnV(a, b);
+                        BigInteger d = Gcd.returnGcd(a, b);
+                        System.out.println(u + " " + v + " " + d);
+                }
+                scan.close();
+        }
+}
+
+class Gcd
+{
+//Implements the extended euclidean algorithm
+//a*u + b*v = Gcd(a,b)
+
+private BigInteger a;
+private BigInteger b;
+private BigInteger u;
+private BigInteger v;
+private BigInteger gcd;
+
+public static BigInteger returnGcd(BigInteger a, BigInteger b)
+{
+Gcd result = new Gcd(a, b);
+return result.gcd;
+}
+
+public static BigInteger returnU(BigInteger a, BigInteger b)
+{
+Gcd result = new Gcd(a, b);
+return result.u;
+}
+
+public static BigInteger returnV(BigInteger a, BigInteger b)
+{
+Gcd result = new Gcd(a, b);
+return result.v;
+}
+
+public static BigInteger returnUGtZero(BigInteger a, BigInteger b)
+{
+Gcd result = new Gcd(a, b);
+result.makeUPositive();
+return result.u;
+}
+
+public static BigInteger returnVWithUGtZero(BigInteger a, BigInteger b)
+{
+Gcd result = new Gcd(a, b);
+result.makeUPositive();
+return result.v;
+}
+
+private Gcd(BigInteger a, BigInteger b)
+{
+this.a = a;
+this.b = b;
+this.u = BigInteger.ONE;
+this.v = BigInteger.ZERO;
+this.gcd = a;
+
+findGcdAndU();
+findV();
+}
+
+private void findGcdAndU()
+{
+BigInteger x = BigInteger.ZERO;
+BigInteger y = b;
+
+while (!y.equals(BigInteger.ZERO))
+{
+BigInteger remainder = gcd.mod(y);
+BigInteger s = u.subtract(gcd.divide(y).multiply(x));
+
+u = x;
+gcd = y;
+x = s;
+y = remainder;
+}
+}
+
+private void findV()
+{
+if (!b.equals(BigInteger.ZERO))
+v = gcd.subtract(a.multiply(u)).divide(b);
+}
+
+private void makeUPositive()
+{
+if (u.compareTo(BigInteger.ZERO) < 0)
+{
+u = u.add(b.divide(gcd));
+v = v.subtract(a.divide(gcd));
+}
+}
+}

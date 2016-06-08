@@ -1,0 +1,53 @@
+---------- Forwarded message ----------
+From: UVa Online Judge <noreply@onlinejudge.org>
+Date: Tue, Dec 1, 2015 at 3:33 PM
+Subject: Submission 16522509 - Accepted
+To: Emmett Casey <elcasey@email.uark.edu>
+
+
+Hi,
+
+This is an automated response from UVa Online Judge.
+
+Your submission with number 16522509 for the problem 10195 - The Knights Of The Round Table has succeeded with verdict Accepted.
+
+Congratulations! Now it is time to try a new problem.
+
+Best regards,
+
+The UVa Online Judge team
+
+
+import java.util.*;
+import java.text.DecimalFormat;
+
+class Main
+{
+	public static void main(String[] args)
+	{
+		Scanner scan = new Scanner(System.in);	
+		while (scan.hasNextDouble())
+		{
+			double sideA = scan.nextDouble();
+			double sideB = scan.nextDouble();
+			double sideC = scan.nextDouble();
+			runAlg(sideA, sideB, sideC);
+		}
+	}
+
+	private static void runAlg(double sideA, double sideB, double sideC)
+	{
+		System.out.print("The radius of the round table is: ");
+		if (sideA == 0 || sideB == 0 || sideC == 0)
+		{
+			System.out.println("0.000");
+			return;
+		}
+		double answer = sideA + sideB + sideC;
+		answer /= 2;
+		answer = ((answer - sideA) * (answer - sideB) * (answer - sideC)) / answer;
+		answer = Math.sqrt(answer);
+		DecimalFormat decForm = new DecimalFormat("0.000");
+		System.out.println(decForm.format(answer));
+	}
+}

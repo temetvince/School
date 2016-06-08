@@ -1,0 +1,119 @@
+---------- Forwarded message ----------
+From: UVa Online Judge <noreply@onlinejudge.org>
+Date: Wed, Sep 23, 2015 at 5:52 PM
+Subject: Submission 16153710 - Accepted
+To: Emmett Casey <elcasey@email.uark.edu>
+
+
+Hi,
+
+This is an automated response from UVa Online Judge.
+
+Your submission with number 16153710 for the problem 120 - Stacks of Flapjacks has succeeded with verdict Accepted.
+
+Congratulations! Now it is time to try a new problem.
+
+Best regards,
+
+The UVa Online Judge team
+
+
+
+#include <iostream>
+#include <string>
+#include <algorithm>
+#include <vector>
+
+
+void printVector(const std::vector<int> v)
+{
+	for (size_t i = 0; i < v.size(); i++)
+	{
+		std::cout << v[i];
+		if (i != v.size() - 1)
+			std::cout << " ";
+	}
+}
+
+void flip(std::vector<int> & v, const size_t pos)
+{
+	for (size_t i = 0; i < (pos+1) / 2; i++)
+	{
+		int temp = v[i];
+		v[i] = v[pos - i];
+		v[pos - i] = temp;	
+	}
+}
+
+size_t findIndex(std::vector<int> v, const int q)
+{
+	for (size_t i = 0; i < v.size(); i++)
+		if (v[i] == q)
+			return i;
+	return -1;
+}
+
+void runAlg(std::vector<int> & v, const std::vector<int> sV)
+{
+	for (size_t i = v.size() - 1; i > 0; i--)
+		if (v[i] != sV[i])
+		{
+			size_t pos = findIndex(v, sV[i]);
+			if (pos == 0)
+			{
+				flip(v, i);
+				std::cout << v.size() - i << " ";
+			}
+			else
+			{
+				flip(v, pos);
+				std::cout << v.size() - pos << " ";
+				flip(v, i);
+				std::cout << v.size() - i << " ";
+			}
+		}
+	std::cout << "0";
+}
+
+void sort(std::vector<int> & v)
+{
+	for (size_t i = 0; i < v.size(); i++)
+	{
+		size_t min = i;
+		for (size_t j = i; j < v.size(); j++)
+			if (v[j] < v[min])
+				min = j;
+		int temp = v[i];
+		v[i] = v[min];
+		v[min] = temp;	
+	}
+}
+
+int main()
+{
+	while (true)
+	{
+		std::string input = "";
+		getline(std::cin, input);
+		if (!std::cin)
+			break;
+		std::cout << input << std::endl;
+		std::vector<int> stack;
+
+		while (true)
+		{
+			size_t op = input.find_first_of(" ", 0);
+			stack.push_back(atoi(input.substr(0, op).c_str()));
+			input = input.substr(op + 1, std::string::npos);
+			if (op == std::string::npos)
+				break;
+		}
+
+		std::vector<int> sortedStack = stack;
+		sort(sortedStack);
+		runAlg(stack, sortedStack);
+		std::cout << std::endl;
+		//printVector(stack);
+	}
+	return 0 ;
+}

@@ -1,0 +1,183 @@
+---------- Forwarded message ----------
+From: UVa Online Judge <noreply@onlinejudge.org>
+Date: Tue, Nov 24, 2015 at 5:14 PM
+Subject: Submission 16486722 - Accepted
+To: Emmett Casey <elcasey@email.uark.edu>
+
+
+Hi,
+
+This is an automated response from UVa Online Judge.
+
+Your submission with number 16486722 for the problem 10182 - Bee Maja has succeeded with verdict Accepted.
+
+Congratulations! Now it is time to try a new problem.
+
+Best regards,
+
+The UVa Online Judge team
+
+
+
+import java.util.*;
+
+class Main
+{
+	static node [] hive;
+
+	private static class node
+	{
+		int x;
+		int y;
+	}
+
+	private static class direction
+	{
+		String value;
+
+		void changeDirection()
+		{
+			if (value.equals("D"))
+				value = "DL";
+			else if (value.equals("DL"))
+				value = "L";
+			else if (value.equals("L"))
+				value = "U";
+			else if (value.equals("U"))
+				value = "UR";
+			else if (value.equals("UR"))
+				value = "R";
+			else
+				value = "D";
+		}
+	}
+
+	public static void main(String[] args)
+	{
+		populateHive();
+		Scanner scan = new Scanner(System.in);
+		while (scan.hasNextInt())
+		{
+			int n = scan.nextInt() - 1;
+			System.out.println(hive[n].x + " " + hive[n].y);
+		}
+	}
+
+	private static void populateHive()
+	{
+		hive = new node [100000];
+
+		int longLat = 2;
+		int longLatCounter = longLat;
+		int diagonal = 2;
+		int diagonalCounter = diagonal;
+
+		hive[0] = new node();
+		hive[0].x = 0;
+		hive[0].y = 0;
+		hive[1] = new node();
+		hive[1].x = 0;
+		hive[1].y = 1;
+
+		direction dir = new direction();
+		dir.value = "L";	
+
+		for (int i = 2; i < hive.length; i++)
+		{
+			hive[i] = new node();
+			if (dir.value.equals("D"))
+			{
+				longLatCounter--;
+				if (longLatCounter == 0)
+				{
+					longLatCounter = longLat;
+					dir.changeDirection();
+					i--;
+				}
+				else
+				{
+					hive[i].x = hive[i - 1].x;
+					hive[i].y = hive[i - 1].y + 1;
+				}
+			}
+			else if (dir.value.equals("DL"))
+			{
+				diagonalCounter--;
+				if (diagonalCounter == 0)
+				{
+					diagonal++;
+					diagonalCounter = diagonal;
+					dir.changeDirection();
+					i--;
+				}		
+				else
+				{
+					hive[i].x = hive[i - 1].x - 1;
+					hive[i].y = hive[i - 1].y + 1;	
+				}
+
+			}
+			else if (dir.value.equals("L"))
+			{
+				longLatCounter--;
+				if (longLatCounter == 0)
+				{
+					longLatCounter = longLat;
+					dir.changeDirection();
+					i--;
+				}
+				else
+				{
+					hive[i].x = hive[i - 1].x - 1;
+					hive[i].y = hive[i - 1].y;
+				}
+			}
+			else if (dir.value.equals("U"))
+			{
+				longLatCounter--;
+				if (longLatCounter == 0)
+				{
+					longLatCounter = longLat;
+					dir.changeDirection();
+					i--;
+				}
+				else
+				{
+					hive[i].x = hive[i - 1].x;
+					hive[i].y = hive[i - 1].y - 1;
+				}
+			}
+			else if (dir.value.equals("UR"))
+			{
+				diagonalCounter--;
+				if (diagonalCounter == 0)
+				{
+					diagonalCounter = diagonal;
+					dir.changeDirection();
+					i--;
+				}
+				else
+				{
+					hive[i].x = hive[i - 1].x + 1;
+					hive[i].y = hive[i - 1].y - 1;
+				}
+			}
+			else
+			{
+				longLatCounter--;
+				if (longLatCounter == 0)
+				{
+					longLat++;
+					longLatCounter = longLat;
+					dir.changeDirection();
+					i--;
+				}
+				else
+				{
+					hive[i].x = hive[i - 1].x + 1;
+					hive[i].y = hive[i - 1].y;
+				}
+			}
+		}
+	}
+}

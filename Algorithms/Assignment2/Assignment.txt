@@ -1,0 +1,54 @@
+Assignment 2
+Note:
+- Please download starting files (attached below) of your programming language and code on it, submit only these files to Moodle (do NOT submit whole project folder).
+- Make sure your code compile (test on turing)
+- You may not share or copy code, including code posted on the internet.  You must give credit to sources in comments included in your code.
+
+A)
+Class:                                    Assignment2A
+Method:                              String makePalindrome(String input)
+ 
+- Palindrome is string that reads the same backward or forward.
+- Write program to add characters to the right end of input to make a shortest palindrome.
+ 
+Constraints: Length of the String input is from 1 to 50, and contains only lowercase letters.
+ 
+Example:
+·         makePalindrome (“fg”)
+o   Return “fgf”  
+o   Note: “fggf” is also a valid palindrome, but we choose the shortest palindrome
+·         makePalindrome (“ababba”)
+o   Return “ababbaba”
+·         makePalindrome (“reviver”)
+o   Return “reviver”
+
+
+B)
+Class:                                    Assignment2B
+Method:                              int numPalindrome(String input)
+ 
+- Write program to return the number of substrings of input that are palindrome
+- A substring is defined as a group of contiguous characters
+ 
+Constraints: Length of the String input is from 1 to 5000, and contains only lowercase letters.
+ 
+Example:
+·         numPalindrome (“dad”)
+o   Return: 4
+o   4 substrings that are palindrome: {d, a, d, dad}
+·         numPalindrome (“xabcba”)
+o   Return: 8
+o   {x, a, b, c, b, a, abcba, bcb}
+·         numPalindrome (“bbb”)
+o   Return: 6
+o   {b, b, b, bb, bb, bbb}
+Note: If your program takes too long to run for a large input on 2B, you might not get full credit.
+
+ 
+Assignment2A.cpp Assignment2A.cpp
+ 
+Assignment2A.java Assignment2A.java
+ 
+Assignment2B.cpp Assignment2B.cpp
+ 
+Assignment2B.java Assignment2B.java

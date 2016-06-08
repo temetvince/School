@@ -1,0 +1,378 @@
+From: UVa Online Judge <noreply@onlinejudge.org>
+Date: Tue, Sep 15, 2015 at 1:26 AM
+Subject: Submission 16103837 - Accepted
+To: Emmett Casey <elcasey@email.uark.edu>
+
+
+Hi,
+
+This is an automated response from UVa Online Judge.
+
+Your submission with number 16103837 for the problem 10315 - Poker Hands has succeeded with verdict Accepted.
+
+Congratulations! Now it is time to try a new problem.
+
+Best regards,
+
+The UVa Online Judge team
+
+
+
+#include <iostream>
+#include <string>
+#include <algorithm>
+#include <vector>
+#include <cmath>
+
+class card
+{
+public:
+	int value;
+	char suite;
+};
+
+card initializeCard(std::string input)
+{
+	card tempCard;
+	char value = input[0];
+	switch (value)
+	{
+		case '2': tempCard.value = 2; break;
+		case '3': tempCard.value = 3; break;
+		case '4': tempCard.value = 4; break;
+		case '5': tempCard.value = 5; break;
+		case '6': tempCard.value = 6; break;
+		case '7': tempCard.value = 7; break;
+		case '8': tempCard.value = 8; break;
+		case '9': tempCard.value = 9; break;
+		case 'T': tempCard.value = 10; break;
+		case 'J': tempCard.value = 11; break;
+		case 'Q': tempCard.value = 12; break;
+		case 'K': tempCard.value = 13; break;
+		case 'A': tempCard.value = 14; break;
+	}
+	tempCard.suite = input[1];
+	return tempCard;	
+}
+
+void sortHandHighestToLowest(std::vector<card> & hand)
+{
+	for (int i = 0; i < 5; i++)
+	{
+		int high = i;
+		for (int j = i; j < 5; j++)
+			if (hand.at(high).value < hand.at(j).value)
+				high = j;
+		card temp;
+		temp.value = hand.at(high).value;
+		temp.suite = hand.at(high).suite;
+		hand.at(high).value = hand.at(i).value;
+		hand.at(high).suite = hand.at(i).suite;
+		hand.at(i).value = temp.value;
+		hand.at(i).suite = temp.suite;
+	}
+}
+
+int straightFlush(std::vector<card> hand)
+{
+	for (int i = 0; i < 4; i++)
+	{
+		if (hand.at(i).value == hand.at(i+1).value + 1 && hand.at(i).suite == hand.at(i+1).suite)
+			continue;
+		else
+			return 0;
+	}
+	return hand.at(0).value;
+}
+
+int fourOfAKind(std::vector<card> hand)
+{
+	int count = 0;
+	for (int i = 0; i < 5; i++)
+		if (hand.at(0).value == hand.at(i).value)
+			count++;
+	if (count == 4)
+		return hand.at(0).value;
+	count = 0;
+	for (int i = 1; i < 5; i++)
+		if (hand.at(1).value == hand.at(i).value)
+			count++;
+	if (count == 4)
+		return hand.at(1).value;
+	return 0;
+}
+
+int fullHouse(std::vector<card> hand)
+{
+	int count = 0;
+	int index = 0;
+	for (int i = 0; i < 5; i++)
+		if (hand.at(0).value == hand.at(i).value)
+			count++;
+		else
+			index = i;
+	if (count == 3)
+	{
+		count = 0;
+		for (int i = 0; i < 5; i++)
+			if (hand.at(index).value == hand.at(i).value)
+				count++;
+		if (count == 2)
+		{
+			for (int i = 0; i < 5; i++)
+			{
+				count = 0;
+				for (int j = i+1; j < 5; j++)
+					if (hand.at(i).value == hand.at(j).value)
+						count++;
+				if (count == 2)
+					return hand.at(i).value;
+			}
+		}
+		else
+			return 0;
+	}
+	if (count == 2)
+	{
+		count = 0;
+		for (int i = 0; i < 5; i++)
+			if (hand.at(index).value == hand.at(i).value)
+				count++;
+		if (count == 3)
+		{
+			for (int i = 0; i < 5; i++)
+			{
+				count = 0;
+				for (int j = i+1; j < 5; j++)
+					if (hand.at(i).value == hand.at(j).value)
+						count++;
+				if (count == 2)
+					return hand.at(i).value;
+			}
+		}
+		else
+			return 0;
+	}
+	return 0;
+}
+
+int flush(std::vector<card> hand)
+{
+	for (int i = 0; i < 5; i++)
+		if (hand.at(0).suite != hand.at(i).suite)
+			return 0;
+	return hand.at(0).value;
+}
+
+int straight(std::vector<card> hand)
+{
+	for (int i = 0; i < 4; i++)
+	{
+		if (hand.at(i).value == hand.at(i+1).value + 1)
+			continue;
+		else
+			return 0;
+	}
+	return hand.at(0).value;
+}
+
+int threeOfAKind(std::vector<card> hand)
+{
+	int count = 0;
+	for (int i = 0; i < 5; i++)
+		if (hand.at(0).value == hand.at(i).value)
+			count++;
+	if (count >= 3)
+		return hand.at(0).value;
+	count = 0;
+	for (int i = 0; i < 5; i++)
+		if (hand.at(1).value == hand.at(i).value)
+			count++;
+	if (count >= 3)
+		return hand.at(1).value;
+	count = 0;
+	for (int i = 0; i < 5; i++)
+		if (hand.at(2).value == hand.at(i).value)
+			count++;
+	if (count >= 3)
+		return hand.at(2).value;
+	return 0;
+}
+
+int twoPairs(std::vector<card> hand, bool return2ndPairAsHighest)
+{
+	int count = 0;
+	int iMatch = -1;
+	for (int i = 0; i < 4; i++)
+		for (int j = i+1; j < 5; j++)
+		{
+			if (hand.at(i).value == hand.at(j).value)
+			{
+				if (count == 1)
+				{
+					if (!return2ndPairAsHighest)
+						return hand.at(iMatch).value;
+					else
+						return hand.at(j).value;
+				}
+				iMatch = i;
+				count++;
+			}
+		}
+	return 0;
+}
+
+int pair(std::vector<card> hand)
+{
+	for (int i = 0; i < 4; i++)
+		for (int j = i+1; j < 5; j++)
+			if (hand.at(i).value == hand.at(j).value)
+				return hand.at(i).value;
+	return 0;
+}
+
+int findHighestHand(std::vector<card> hand)
+{
+	int val = 0;
+	val = straightFlush(hand);
+	if (val != 0)
+		return val + 800;
+	val = fourOfAKind(hand);
+	if (val != 0)
+		return val + 700;
+	val = fullHouse(hand);
+	if (val != 0)
+		return val + 600;
+	val =flush(hand);
+	if (val != 0)
+		return val + 500;
+	val = straight(hand);
+	if (val != 0)
+		return val + 400;
+	val = threeOfAKind(hand);
+	if (val != 0)
+		return val + 300;
+	val = twoPairs(hand, false);
+	if (val != 0)
+		return val + 200;
+	val = pair(hand);
+	if (val != 0)
+		return val + 100;
+	return hand.at(0).value;
+}
+
+void tie(std::vector<card> black, std::vector<card> white)
+{
+	for (int i = 0; i < 5; i++)
+	{	
+		if (black.at(i).value > white.at(i).value)
+		{
+			std::cout << "Black wins.";
+			return;
+		}
+		else if (black.at(i).value < white.at(i).value)
+		{
+			std::cout << "White wins.";
+			return;
+		}
+		else if (i == 4)
+		{
+			std::cout << "Tie.";
+			return;
+		}
+		else
+			continue;
+	}
+}
+
+int main()
+{
+	bool firstRun = true;
+	while (true)
+	{
+		std::string input;
+		std::vector<card> black;
+		std::vector<card> white;
+		getline(std::cin, input);
+		if (input.empty() || !std::cin)
+		{
+			if (!firstRun)
+				std::cout << std::endl;
+			break;
+		}
+
+		for (int i = 0; i < 5; i++)
+			black.push_back(initializeCard(input.substr(i*3, 2)));
+		for (int i = 0; i < 5; i++)
+			white.push_back(initializeCard(input.substr((i+5)*3, 2)));
+
+		sortHandHighestToLowest(black);
+		sortHandHighestToLowest(white);
+
+		int blackVal = findHighestHand(black);
+		int whiteVal = findHighestHand(white);
+
+		if (!firstRun)
+			std::cout << std::endl;
+		firstRun = false;
+		if (blackVal > whiteVal)
+			std::cout << "Black wins.";
+		else if (whiteVal > blackVal)
+			std::cout << "White wins.";
+		else
+		{
+			if(blackVal > 800)
+			{
+				std::cout << "Tie.";
+				continue;
+			}
+			else if(blackVal > 700)
+			{
+				std::cout << "Tie.";
+				continue;
+			}
+			else if(blackVal > 600)
+			{
+				std::cout << "Tie.";
+				continue;
+			}
+			else if(blackVal > 500)
+			{
+				tie(black, white);
+				continue;
+			}
+			else if(blackVal > 400)
+			{
+				std::cout << "Tie.";
+				continue;
+			}
+			else if(blackVal > 300)
+			{
+				std::cout << "Tie.";
+				continue;
+			}
+			else if(blackVal > 200)
+			{
+				if (twoPairs(black, true) > twoPairs(white, true))
+					std::cout << "Black wins.";
+				else if (twoPairs(black, true) < twoPairs(white, true))
+					std::cout << "White wins.";
+				else
+					tie(black, white);
+				continue;
+			}
+			else if(blackVal > 100)
+			{
+				tie(black, white);
+				continue;
+			}
+			else
+			{
+				tie(black, white);
+				continue;
+			}
+		}
+	}
+
+	return 0;
+}

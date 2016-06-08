@@ -1,0 +1,95 @@
+#include <iostream>
+#include <vector>
+#include <string>
+
+using namespace std;
+
+void handleInput(string &, int &);
+void putTogetherFiles();
+int findAverageLength();
+vector<string> findAllCombinationsOfLength(const int);
+string findMostOccuringCombination(const vector<string>);
+
+vector<string> fileParts;
+
+int main()
+{
+	string input = "";
+	getline(cin, input);
+	int numberOfCases = atoi(input.c_str());
+	getline(cin, input);
+
+	while (numberOfCases != 0)
+	{
+		getline(cin, input);
+		if (input.empty())
+		{
+			if (fileParts.size() != 0)
+				putTogetherFiles();
+			vector<string>().swap(fileParts);
+			numberOfCases--;
+			if (numberOfCases != 0)
+				cout << endl;
+		}
+		else
+			fileParts.push_back(input);
+	}
+
+	return 0;
+}
+
+void putTogetherFiles()
+{
+	int totalLength = findAverageLength();
+	vector<string> possibleCombinations = findAllCombinationsOfLength(totalLength);
+	string answer = findMostOccuringCombination(possibleCombinations);
+	
+	cout << answer << endl;
+}
+
+int findAverageLength()
+{
+	int totalLength = 0;
+	for (int i = 0; i < fileParts.size(); i++)
+		totalLength += fileParts.at(i).length();
+	return totalLength / (fileParts.size() / 2);
+}
+
+vector<string> findAllCombinationsOfLength(const int totalLength)
+{
+	vector<string> possibleCombinations;
+	for (int i = 0; i < fileParts.size(); i++)
+	{
+		for (int j = 0; j < fileParts.size(); j++)
+		{
+			if (i == j)
+				continue;
+			else if (fileParts.at(i).length() + fileParts.at(j).length() == totalLength)
+				possibleCombinations.push_back(fileParts.at(i) + fileParts.at(j));
+		}
+	}
+	return possibleCombinations;
+}
+
+string findMostOccuringCombination(const vector<string> possibleCombinations)
+{
+	string answer = possibleCombinations.at(0);
+	int max = 0;
+	for (int i = 0; i < possibleCombinations.size(); i++)
+	{
+		int temp = 0;
+		for (int j = 0; j < possibleCombinations.size(); j++)
+		{
+			if (i == j)
+				continue;
+			else if (possibleCombinations.at(i) == possibleCombinations.at(j))
+				temp++;
+		}
+		if (temp > max)
+		{
+			answer = possibleCombinations.at(i);
+			max = temp;
+		}
+	}
+	return answer;
+}
